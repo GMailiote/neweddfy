@@ -70,11 +70,11 @@ const router = createRouter({
                     component: () => import('@/views/uikit/Media.vue')
                 },
                 {
-                    path: '/uikit/menu',
-                    component: () => import('@/views/uikit/Menu.vue'),
+                    path: '/criar-custo',
+                    component: () => import('@/components/CreateCost.vue'),
                     children: [
                         {
-                            path: '/uikit/menu',
+                            path: '/uikit/menu/personal',
                             component: () => import('@/views/uikit/menu/PersonalDemo.vue')
                         },
                         {

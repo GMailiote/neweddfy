@@ -1,9 +1,10 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import { useLayout } from '@/layout/composables/layout';
+// essas 2 seguidas comentadas sao para puxar o logo dinamicamente de acordo com o tema
+//import { useLayout } from '@/layout/composables/layout';
 import { useRouter } from 'vue-router';
 
-const { layoutConfig, onMenuToggle } = useLayout();
+//const { layoutConfig, onMenuToggle } = useLayout();
 
 const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
@@ -18,7 +19,8 @@ onBeforeUnmount(() => {
 });
 
 const logoUrl = computed(() => {
-    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
+    //return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
+    return `https://eddfy.com/assets/img/logo_sem_frase.png`;
 });
 
 const onTopBarMenuButton = () => {
@@ -63,8 +65,8 @@ const isOutsideClicked = (event) => {
 <template>
     <div class="layout-topbar">
         <router-link to="/" class="layout-topbar-logo">
-            <img :src="logoUrl" alt="logo" />
-            <span>SAKAI</span>
+            <img :src="logoUrl" alt="logo" style="width: 25%; height: auto;" />
+            <span>Eddfy</span>
         </router-link>
 
         <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
