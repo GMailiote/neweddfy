@@ -209,7 +209,6 @@ const close = () => {
 </script>
 <template>
     <div class="card p-fluid">
-        <CreateCost/>
         <h5>Dialog</h5>
         <Dialog header="Dialog" v-model:visible="display" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
             <div class="grid p-fluid">
