@@ -209,8 +209,7 @@ const close = () => {
 </script>
 <template>
     <div class="card p-fluid">
-        <h5>Dialog</h5>
-        <Dialog header="Dialog" v-model:visible="display" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
+        <Dialog header="" v-model:visible="display" :breakpoints="{ '1500px': '100vw' }" :style="{ width: '80vw' }" :modal="true">
             <div class="grid p-fluid">
                 <div>
                     <CreateCost/>
@@ -221,13 +220,12 @@ const close = () => {
                 <Button label="Ok" @click="close" icon="pi pi-check" class="p-button-outlined" />
             </template>
         </Dialog>
-        <Button label="Show" icon="pi pi-external-link" style="width: auto" @click="open" />
     </div>
-    <div class="card">
-        <h1 class="mr2- mb-2">Sumario de Custos</h1>
-        <a href="http://localhost:5173/#/uikit/menu"><Button label="Criar" class="mr-2 mb-2" /></a>
-        <a href="http://localhost:5173/#/uikit/menu"> <Button label="Editar" class="p-button-secondary mr-2 mb-2" /></a>
-        <Button label="Excluir" class="p-button-danger mr-2 mb-2" />
+    <div class="card flex">
+        <h1 class="mr-2 mb-2">Sumario de Custos</h1>
+        <Button class="mr-2 mb-2" label="Criar" icon="pi pi-external-link" style="width: auto" @click="open" />
+        <a href="http://localhost:5173/#/uikit/menu"> <Button label="Editar Custo" class="p-button-secondary mr-2 mb-2" /></a>
+        <Button label="Configurar Custo de Transição" class="p-button-warning mr-2 mb-2" />
     </div>
     <div class="grid">
         <div class="col-12 lg:col-6 xl:col-2">
@@ -446,6 +444,10 @@ const close = () => {
             </div>
         </div>
     </div>
+
+
+
+    
 </template>
 <style scoped lang="scss">
 @import '@/assets/demo/styles/badges.scss';

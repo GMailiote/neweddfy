@@ -1,5 +1,8 @@
 <script setup>
 import Tela1 from '../views/uikit/menu/Tela1.vue'
+import Tela2 from '../views/uikit/menu/Tela2.vue'
+import Tela3 from '../views/uikit/menu/Tela3.vue'
+import Tela4 from '../views/uikit/menu/Tela4.vue'
 import SeatDemo from '../views/uikit/menu/SeatDemo.vue'
 import PersonalDemo from '../views/uikit/menu/PersonalDemo.vue'
 import PaymentDemo from '../views/uikit/menu/PaymentDemo.vue'
@@ -60,25 +63,28 @@ const nestedRouteItems = ref([
 
 <template>
      <div class="card">
-                <h5>TabView</h5>
                 <TabView>
-                    <TabPanel header="Header I">
+                    
+                    <TabPanel header="Identificação do Custo">
                         <p class="line-height-3 m-0">
                             <Tela1/>
-                        </p></TabPanel
-                    >
-                    <TabPanel header="Header II">
-                        <p class="line-height-3 m-0">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                            enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
                         </p>
                     </TabPanel>
-                    <TabPanel header="Header III">
+                    <TabPanel header="Valores e Prazos">
                         <p class="line-height-3 m-0">
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
-                            culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+                            <Tela2/>
+                        </p>
+                    </TabPanel>
+                    <TabPanel header="Informações Adicionais">
+                        <p class="line-height-3 m-0">
+                            <Tela3/>
+                        </p>
+                    </TabPanel>
+                    <TabPanel header="Confirmação de Registro">
+                        <p class="line-height-3 m-0">
+                            <Tela4/>
                         </p>
                     </TabPanel>
                 </TabView>
-            </div>
+        </div>
 </template>

@@ -1,43 +1,210 @@
-    <!---<h4>Resumo de Custo</h4>
-    <div class="">
-        <h5>Tipo: Fixo</h5>
-        <h5>Categoria: Aluguel</h5>
-        <h5>Descrição: Despesas com Aluguel de imóveis</h5>
-        <h5>Unidade de Negócio: Loja A</h5>
-        <h5>Área Responsável: Operação</h5>
-        <h5>Vencimento: 23/10/2023</h5>
-        <h5>Valor: R$ 500,00</h5>
-        <h5>Nota Fiscal: 123</h5>
-        <h5>Forma de Pagamento: PIX</h5>
-        <h5>Projeto ou cliente Relacionado: nenhum</h5>
-        <h5>Observações: Pagamento a vista</h5>
-        <h5>Cobrar o custo automaticamente todo mês: Sim</h5>
-        <h5>Este custo tem uma data final? Não</h5>
-
-    </div>
-    <div style="display: flex; justify-content: flex-end; margin-top: 5%; ">
-        <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/payment"><Button label="Voltar" class="mr-2 mb-2 p-button-warning" /></a>
-        <a style="margin-right: 1%" href="http://localhost:5173/"> <Button label="Salvar" class="p-button-success mr-2 mb-2" /></a>
-        <a href="http://localhost:5173/"><Button label="Cancelar" class="p-button-danger mr-2 mb-2" /></a>
-    </div>
-
-    !--->
-
 <script setup>
-    
-    const trocarTela = (tela) => {
-        this.$emit('trocarTela', tela);
+import { ref, onMounted } from 'vue';
+import CountryService from '@/service/CountryService';
+import NodeService from '@/service/NodeService';
+
+const autoValue = ref(null);
+const selectedAutoValue = ref(null);
+const autoFilteredValue = ref([]);
+
+const treeSelectNodes = ref(null);
+const countryService = new CountryService();
+const nodeService = new NodeService();
+
+onMounted(() => {
+    countryService.getCountries().then((data) => (autoValue.value = data));
+    nodeService.getTreeNodes().then((data) => (treeSelectNodes.value = data));
+});
+
+const searchCountry = (event) => {
+    setTimeout(() => {
+        if (!event.query.trim().length) {
+            autoFilteredValue.value = [...autoValue.value];
+        } else {
+            autoFilteredValue.value = autoValue.value.filter((country) => {
+                return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+            });
+        }
+    }, 250);
 };
 </script>
-
 <template>
-    <div>
-        tela 3
-        tela 3
-        tela 3
-        tela 3
-        tela 3
-        <button @click="trocarTela('tela3')">ir para a tela 3</button>
+    <h5>Descrição</h5>
+    <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
+    <h5>Observações</h5>
+    <Textarea placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
+
+    <div style="display: flex; justify-content: space-between; margin-top:1%;">
+        <div style="width: 45%;">
+            <h5>Unidade</h5>
+            <AutoComplete
+                style="display: flex; justify-content: space-between"
+                placeholder="Search"
+                id="dd"
+                :dropdown="true"
+                :multiple="true"
+                v-model="selectedAutoValue"
+                :suggestions="autoFilteredValue"
+                @complete="searchCountry($event)"
+                field="name"
+            />
+        </div>
+        <div style="width: 45%;">
+            <h5>Área ou Responsável</h5>
+            <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
+        </div>
+    </div>
+    <div style="display: flex; justify-content: flex-end; margin-top: 5%; ">
+        <a style="margin-right: 1%" href="http://localhost:5173/"><Button label="Voltar" class="mr-2 mb-2 p-button-warning" /></a>
+        <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/seat"> <Button label="Proximo" class="p-button-info mr-2 mb-2" /></a>
+        <a href="http://localhost:5173/"><Button label="Cancelar" class="p-button-danger mr-2 mb-2" /></a>
     </div>
 </template>
+<style lang="scss" scoped>
+.google {
+    background: linear-gradient(to left, var(--purple-600) 50%, var(--purple-700) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    border-color: var(--purple-700);
+    display: flex;
+    align-items: stretch;
+    padding: 0;
 
+    &:enabled:hover {
+        background: linear-gradient(to left, var(--purple-600) 50%, var(--purple-700) 50%);
+        background-size: 200% 100%;
+        background-position: left bottom;
+        border-color: var(--purple-700);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 1px var(--purple-400);
+    }
+}
+
+.twitter {
+    background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    border-color: var(--blue-500);
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+
+    &:enabled:hover {
+        background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
+        background-size: 200% 100%;
+        background-position: left bottom;
+        border-color: var(--blue-500);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 1px var(--blue-200);
+    }
+}
+
+.discord {
+    background: linear-gradient(to left, var(--bluegray-700) 50%, var(--bluegray-800) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    border-color: var(--bluegray-800);
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+
+    &:enabled:hover {
+        background: linear-gradient(to left, var(--bluegray-700) 50%, var(--bluegray-800) 50%);
+        background-size: 200% 100%;
+        background-position: left bottom;
+        border-color: var(--bluegray-800);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 1px var(--purple-500);
+    }
+}
+
+.template-button .p-button.twitter {
+    background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--blue-500);
+}
+.template-button .p-button.twitter:hover {
+    background-position: left bottom;
+}
+.template-button .p-button.twitter i {
+    background-color: var(--blue-500);
+}
+.template-button .p-button.twitter:focus {
+    box-shadow: 0 0 0 1px var(--blue-200);
+}
+.template-button .p-button.slack {
+    background: linear-gradient(to left, var(--orange-400) 50%, var(--orange-500) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--orange-500);
+}
+.template-button .p-button.slack:hover {
+    background-position: left bottom;
+}
+.template-button .p-button.slack i {
+    background-color: var(--orange-500);
+}
+.template-button .p-button.slack:focus {
+    box-shadow: 0 0 0 1px var(--orange-200);
+}
+.template-button .p-button.amazon {
+    background: linear-gradient(to left, var(--yellow-400) 50%, var(--yellow-500) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #000;
+    border-color: var(--yellow-500);
+}
+.template-button .p-button.amazon:hover {
+    background-position: left bottom;
+}
+.template-button .p-button.amazon i {
+    background-color: var(--yellow-500);
+}
+.template-button .p-button.amazon:focus {
+    box-shadow: 0 0 0 1px var(--yellow-200);
+}
+.template-button .p-button.discord {
+    background: linear-gradient(to left, var(--bluegray-700) 50%, var(--bluegray-800) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--bluegray-800);
+}
+.template-button .p-button.discord:hover {
+    background-position: left bottom;
+}
+.template-button .p-button.discord i {
+    background-color: var(--bluegray-800);
+}
+.template-button .p-button.discord:focus {
+    box-shadow: 0 0 0 1px var(--bluegray-500);
+}
+@media screen and (max-width: 960px) {
+    -button .p-button {
+        margin-bottom: 0.5rem;
+    }
+    -button .p-button:not(.p-button-icon-only) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    -button .p-buttonset .p-button {
+        margin-bottom: 0;
+    }
+}
+</style>

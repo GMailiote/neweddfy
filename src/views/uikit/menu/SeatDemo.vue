@@ -122,7 +122,7 @@ const searchCountry = (event) => {
     background: linear-gradient(to left, var(--bluegray-700) 50%, var(--bluegray-800) 50%);
     background-size: 200% 100%;
     background-position: right bottom;
-    transition: background-position 0.5s ease-out;
+    transition: background-position 0.5s ease-o ut;
     border-color: var(--bluegray-800);
     padding: 0;
     display: flex;
