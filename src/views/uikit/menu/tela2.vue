@@ -29,31 +29,35 @@ const searchCountry = (event) => {
 };
 </script>
 <template>
-    <h5>Descrição</h5>
-    <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
-    <h5>Observações</h5>
-    <Textarea placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
-
-    <div style="display: flex; justify-content: space-between; margin-top:1%;">
-        <div style="width: 45%;">
-            <h5>Unidade</h5>
-            <AutoComplete
-                style="display: flex; justify-content: space-between"
-                placeholder="Search"
-                id="dd"
-                :dropdown="true"
-                :multiple="true"
-                v-model="selectedAutoValue"
-                :suggestions="autoFilteredValue"
-                @complete="searchCountry($event)"
-                field="name"
-            />
+    <h5>Qual o dia do vencimento?</h5>
+        <Calendar :showIcon="true" :showButtonBar="true" v-model="calendarValue"></Calendar>
+    <div style="display: flex; justify-content: space-between; margin-top:1%;"> 
+        <div>
+            <h5>valor total</h5>
+            <InputText class="" type="text" placeholder="Default"></InputText>
         </div>
-        <div style="width: 45%;">
-            <h5>Área ou Responsável</h5>
-            <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
+        <div>
+            <h5>nota fiscal</h5>
+            <InputText type="text" placeholder="Default"></InputText>
         </div>
+        
     </div>
+    <div style="display: flex; justify-content: space-between; margin-top:3%; align-items: center;"> 
+        
+    <div>
+        <h5>Descrição</h5>
+        <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
+    </div>
+    <div>
+        <h5>Descrição</h5>
+        <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
+    </div>
+
+    
+    
+    </div>
+        
+
     <div style="display: flex; justify-content: flex-end; margin-top: 5%; ">
         <a style="margin-right: 1%" href="http://localhost:5173/"><Button label="Voltar" class="mr-2 mb-2 p-button-warning" /></a>
         <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/seat"> <Button label="Proximo" class="p-button-info mr-2 mb-2" /></a>

@@ -480,7 +480,7 @@ const onContextRightClick = (event) => {
             </div>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="col-12 md:col-">
             <div class="card">
                 <h5>Tiered Menu</h5>
                 <TieredMenu :model="tieredMenuItems" />
