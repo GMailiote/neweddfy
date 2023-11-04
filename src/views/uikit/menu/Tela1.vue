@@ -29,9 +29,9 @@ const searchCountry = (event) => {
 };
 </script>
 <template>
-<div ">
+<div>
     <div style="display: flex; justify-content: space-between; margin-top:1%;">
-        <div style="width: 45%;">
+        <div class="w-auto">
             <h5>Categoria</h5>
             <AutoComplete
                 style="display: flex; justify-content: space-between"
