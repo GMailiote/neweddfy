@@ -29,7 +29,7 @@ const searchCountry = (event) => {
 };
 </script>
 <template>
-<div>
+<div >
     <div style="display: flex; justify-content: space-between; margin-top:1%;">
         <div class="w-auto">
             <h5>Categoria</h5>
@@ -73,9 +73,10 @@ const searchCountry = (event) => {
     <h5>Observações</h5>
     <Textarea placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
     <div style="display: flex; justify-content: flex-end; margin-top: 5%; ">
-        <a style="margin-right: 1%" href="http://localhost:5173/"><Button label="Voltar" class="mr-2 mb-2 p-button-warning" /></a>
-        <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/seat"> <Button label="Proximo" class="p-button-info mr-2 mb-2" /></a>
-        <a href="http://localhost:5173/"><Button label="Cancelar" class="p-button-danger mr-2 mb-2" /></a>
+        <a style="margin-right: 1%" href="http://localhost:5173/"><Button label="Salvar" class="mr-2 mb-2 p-button-success" /></a>
+        <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/seat"> <Button label="Voltar" class="mr-2 mb-2 p-button-warning " /></a>
+        <a href="http://localhost:5173/"><Button label="Cancelar" class="mr-2 mb-2 p-button-primary" /></a>
+        <a href="http://localhost:5173/"><Button label="Cancelar" class="ml-2 mb-2 p-button-danger" /></a>
     </div>
 </div>
 </template>

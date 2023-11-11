@@ -62,11 +62,11 @@ const nestedRouteItems = ref([
 
 
 <template>
-     <div class="card">
-                <TabView>
+     <div class="flex align-items-center justify-content-center	w-12">
+                <TabView >
                     
-                    <TabPanel header="Identificação do Custo">
-                        <p class="line-height-3 m-0">
+                    <TabPanel class="" header="Identificação do Custo">
+                        <p class="line-height-2 m-2 ">
                             <Tela1/>
                         </p>
                     </TabPanel>

@@ -6,6 +6,7 @@ import NodeService from '@/service/NodeService';
 const autoValue = ref(null);
 const selectedAutoValue = ref(null);
 const autoFilteredValue = ref([]);
+const switchValue = ref(false);
 
 const treeSelectNodes = ref(null);
 const countryService = new CountryService();
@@ -27,37 +28,32 @@ const searchCountry = (event) => {
         }
     }, 250);
 };
+
+
+
+
+
 </script>
 <template>
-    <h5>Descrição</h5>
+    <h5>Status Pagamento</h5>
     <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
-    <h5>Observações</h5>
-    <Textarea placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
+    <div class="mt-3 flex">
+        <h5 class="mr-3">Cobrar este custo automaticamente todo mês?</h5>
+        <InputSwitch v-model="switchValue" />
 
-    <div style="display: flex; justify-content: space-between; margin-top:1%;">
-        <div style="width: 45%;">
-            <h5>Unidade</h5>
-            <AutoComplete
-                style="display: flex; justify-content: space-between"
-                placeholder="Search"
-                id="dd"
-                :dropdown="true"
-                :multiple="true"
-                v-model="selectedAutoValue"
-                :suggestions="autoFilteredValue"
-                @complete="searchCountry($event)"
-                field="name"
-            />
-        </div>
-        <div style="width: 45%;">
-            <h5>Área ou Responsável</h5>
-            <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
-        </div>
     </div>
+    <div class="flex">
+        <h5 class="mr-3">este custo tem uma data final?</h5>
+        <InputSwitch v-model="switchValue" />
+
+    </div>
+
+
     <div style="display: flex; justify-content: flex-end; margin-top: 5%; ">
-        <a style="margin-right: 1%" href="http://localhost:5173/"><Button label="Voltar" class="mr-2 mb-2 p-button-warning" /></a>
-        <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/seat"> <Button label="Proximo" class="p-button-info mr-2 mb-2" /></a>
-        <a href="http://localhost:5173/"><Button label="Cancelar" class="p-button-danger mr-2 mb-2" /></a>
+        <a style="margin-right: 1%" href="http://localhost:5173/"><Button label="Salvar" class="mr-2 mb-2 p-button-success" /></a>
+        <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/seat"> <Button label="Voltar" class="mr-2 mb-2 p-button-warning " /></a>
+        <a href="http://localhost:5173/"><Button label="Cancelar" class="mr-2 mb-2 p-button-primary" /></a>
+        <a href="http://localhost:5173/"><Button label="Cancelar" class="ml-2 mb-2 p-button-danger" /></a>
     </div>
 </template>
 <style lang="scss" scoped>
