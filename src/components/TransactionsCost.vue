@@ -1,16 +1,8 @@
 <script setup>
-import { onMounted, ref, watch, onBeforeMount } from 'vue';
-import ProductService from '@/service/ProductService';
-import { useLayout } from '@/layout/composables/layout';
-import PersonalDemo from '../views/uikit/menu/PersonalDemo.vue'
-import PaymentDemo from '../views/uikit/menu/PaymentDemo.vue'
-import CreateCost from '../components/CreateCost.vue'
-import TransactionsCost from '../components/TransactionsCost.vue';
-
-
-// variavel que pode ser importada junto de "vue"  {reactive},
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import CustomerService from '@/service/CustomerService';
+import ProductService from '@/service/ProductService';
+import { ref, onBeforeMount } from 'vue';
 
 const customer1 = ref(null);
 const customer2 = ref(null);
@@ -18,6 +10,9 @@ const customer3 = ref(null);
 const filters1 = ref(null);
 const loading1 = ref(null);
 const loading2 = ref(null);
+const idFrozen = ref(false);
+const products = ref(null);
+const expandedRows = ref([]);
 const statuses = ref(['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']);
 const representatives = ref([
     { name: 'Amy Elsner', image: 'amyelsner.png' },
@@ -33,6 +28,7 @@ const representatives = ref([
 ]);
 
 const customerService = new CustomerService();
+const productService = new ProductService();
 
 onBeforeMount(() => {
     productService.getProductsWithOrdersSmall().then((data) => (products.value = data));
@@ -65,6 +61,12 @@ const initFilters1 = () => {
 const clearFilter1 = () => {
     initFilters1();
 };
+const expandAll = () => {
+    expandedRows.value = products.value.filter((p) => p.id);
+};
+const collapseAll = () => {
+    expandedRows.value = null;
+};
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 };
@@ -76,272 +78,21 @@ const formatDate = (value) => {
         year: 'numeric'
     });
 };
-
-const { isDarkTheme } = useLayout();
-
-const products = ref(null);
-/*const lineData = reactive({
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            label: 'First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            fill: false,
-            backgroundColor: '#2f4860',
-            borderColor: '#2f4860',
-            tension: 0.4
-        },
-        {
-            label: 'Second Dataset',
-            data: [28, 48, 40, 19, 86, 27, 90],
-            fill: false,
-            backgroundColor: '#00bb7e',
-            borderColor: '#00bb7e',
-            tension: 0.4
-        }
-    ]
-});*/
-/*const items = ref([
-    { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-    { label: 'Remove', icon: 'pi pi-fw pi-minus' }
-]);*/
-const lineOptions = ref(null);
-const productService = new ProductService();
-
-onMounted(() => {
-    productService.getProductsSmall().then((data) => (products.value = data));
-});
-
-/*const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-};
-*/
-const applyLightTheme = () => {
-    lineOptions.value = {
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#495057'
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: '#495057'
-                },
-                grid: {
-                    color: '#ebedef'
-                }
-            },
-            y: {
-                ticks: {
-                    color: '#495057'
-                },
-                grid: {
-                    color: '#ebedef'
-                }
+const calculateCustomerTotal = (name) => {
+    let total = 0;
+    if (customer3.value) {
+        for (let customer of customer3.value) {
+            if (customer.representative.name === name) {
+                total++;
             }
         }
-    };
+    }
+
+    return total;
 };
-
-const applyDarkTheme = () => {
-    lineOptions.value = {
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#ebedef'
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: '#ebedef'
-                },
-                grid: {
-                    color: 'rgba(160, 167, 181, .3)'
-                }
-            },
-            y: {
-                ticks: {
-                    color: '#ebedef'
-                },
-                grid: {
-                    color: 'rgba(160, 167, 181, .3)'
-                }
-            }
-        }
-    };
-};
-
-watch(
-    isDarkTheme,
-    (val) => {
-        if (val) {
-            applyDarkTheme();
-        } else {
-            applyLightTheme();
-        }
-    },
-    { immediate: true }
-);
-const display = ref(false);
-const display2 = ref(false)
-
-onMounted(() => {
-    productService.getProductsSmall().then((data) => (products.value = data));
-});
-
-const open = () => {
-    display.value = true;
-};
-
-const close = () => {
-    display.value = false;
-};
-
-const open1 = () => {
-    display2.value = true;
-};
-
-const close2 = () => {
-    display2.value = false;
-};
-
-
-
-
-
 </script>
+
 <template>
-    <div class="card p-fluid">
-        <Dialog header="1" v-model:visible="display" :breakpoints="{ '1500px': '80vw' }" :style="{ width: '50vw' }" :modal="true">
-            <div class="grid p-fluid">
-                <div class="w-12">
-                    <CreateCost/>
-                </div>
-            </div>
-
-            <template #footer>
-                <Button label="Ok" @click="close" icon="pi pi-check" class="p-button-outlined" />
-            </template>
-        </Dialog>
-    </div>
-    <div class="card flex">
-        <h1 class="mr-2 mb-2">Sumario de Custos</h1>
-        <Button class="mr-2 mb-2" label="Criar" icon="pi pi-external-link" style="width: auto" @click="open"/>
-        <a href="http://localhost:5173/#/uikit/menu"> <Button label="Editar Custo" class="p-button-secondary mr-2 mb-2" /></a>
-        <Button label="Configurar Custo de Transição" class="p-button-warning mr-2 mb-2"  @click="open1"/>
-        
-        
-        <Dialog header="2" v-model:visible="display2" :breakpoints="{ '1500px': '80vw' }" :style="{ width: '50vw' }" :modal="true">
-            <div class="grid p-fluid">
-                <div class="w-12">
-                    <TransactionsCost/>
-                </div>
-            </div>
-
-            <template #footer>
-            </template>
-        </Dialog>
-        
-        
-       
-    </div>
-    <div class="grid">
-        <div class="col-12 lg:col-6 xl:col-2">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">CPV</span>
-                        <div class="text-900 font-medium text-xl">R$ 6600,00</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-green-500 font-medium">%24+ </span>
-                <span class="text-500">Desde Hojedd</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-2">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Custo Operacional</span>
-                        <div class="text-900 font-medium text-xl">R$ 850,68</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-map-marker text-orange-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-green-500 font-medium">%52+ </span>
-                <span class="text-500">Desde a Última Semana</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-2">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Custos Registrados</span>
-                        <div class="text-900 font-medium text-xl">R$ 562,52</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-map-marker text-orange-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-green-500 font-medium">%20+ </span>
-                <span class="text-500">Desde a Última Semana</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-2">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Gasto em Compras</span>
-                        <div class="text-900 font-medium text-xl">R$ 1250,80</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-red-500 font-medium">%24- </span>
-                <span class="text-500">Desde Hoje</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-2">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Máquinas de Cartão</span>
-                        <div class="text-900 font-medium text-xl">R$ 850,68</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-map-marker text-orange-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-green-500 font-medium">%52+ </span>
-                <span class="text-500">Desde a Última Semana</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-2">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Despesas Totais</span>
-                        <div class="text-900 font-medium text-xl">R$ 2220,52</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-map-marker text-orange-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-red-500 font-medium">%20+ </span>
-                <span class="text-500">Desde a Última Semana</span>
-            </div>
-        </div>
-    </div>
     <div class="grid">
         <div class="col-12">
             <div class="card">
@@ -466,12 +217,10 @@ const close2 = () => {
                 </DataTable>
             </div>
         </div>
+
     </div>
-
-
-
-    
 </template>
+
 <style scoped lang="scss">
 @import '@/assets/demo/styles/badges.scss';
 

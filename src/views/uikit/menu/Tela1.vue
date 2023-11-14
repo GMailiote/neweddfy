@@ -75,7 +75,7 @@ const searchCountry = (event) => {
     <div style="display: flex; justify-content: flex-end; margin-top: 5%; ">
         <a style="margin-right: 1%" href="http://localhost:5173/"><Button label="Salvar" class="mr-2 mb-2 p-button-success" /></a>
         <a style="margin-right: 1%" href="http://localhost:5173/#/uikit/menu/seat"> <Button label="Voltar" class="mr-2 mb-2 p-button-warning " /></a>
-        <a href="http://localhost:5173/"><Button label="Cancelar" class="mr-2 mb-2 p-button-primary" /></a>
+        <a href="http://localhost:5173/"><Button label="Proximo" class="mr-2 mb-2 p-button-primary" /></a>
         <a href="http://localhost:5173/"><Button label="Cancelar" class="ml-2 mb-2 p-button-danger" /></a>
     </div>
 </div>
